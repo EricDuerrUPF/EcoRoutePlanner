@@ -1,0 +1,31 @@
+Ruta,Modo,Distancia_km,Tiempo_min,AQ_Cost,Zonas
+Espanya-Sagrada,fastest,4.17,21.19,9951.62,Z2->Z3
+Espanya-Sagrada,greenest,4.16,21.9,9929.2,Z2->Z3
+Espanya-Sagrada,balanced,4.17,21.3,9942.23,Z2->Z3
+Aragó-CarrerdeMaquinista,fastest,2.36,10.6,8422.06,Z0->Z1
+Aragó-CarrerdeMaquinista,greenest,2.29,11.18,7396.23,Z0->Z1
+Aragó-CarrerdeMaquinista,balanced,2.29,11.18,7396.23,Z0->Z1
+CarrerSevilla-Av.Diag,fastest,4.82,17.93,15201.58,Z1->Z0
+CarrerSevilla-Av.Diag,greenest,4.81,18.05,15197.94,Z1->Z0
+CarrerSevilla-Av.Diag,balanced,4.82,17.93,15201.58,Z1->Z0
+BlasodeGaray-PassatgeMarimon,fastest,3.46,15.37,8398.17,Z2->Z3
+BlasodeGaray-PassatgeMarimon,greenest,3.46,15.37,8398.17,Z2->Z3
+BlasodeGaray-PassatgeMarimon,balanced,3.46,15.37,8398.17,Z2->Z3
+València- Av.Roma,fastest,3.31,14.02,7920.27,Z3->Z2
+València- Av.Roma,greenest,3.28,14.8,7632.84,Z3->Z2
+València- Av.Roma,balanced,3.23,14.42,7633.39,Z3->Z2
+Av.Drassanes-CarrerTapioles,fastest,3.87,13.43,11628.47,Z1->Z2
+Av.Drassanes-CarrerTapioles,greenest,4.0,13.99,11037.98,Z1->Z2
+Av.Drassanes-CarrerTapioles,balanced,4.0,13.99,11037.98,Z1->Z2
+CarrerStCarles-CarrerGirona,fastest,8.17,34.12,23598.63,Z1->Z3
+CarrerStCarles-CarrerGirona,greenest,8.04,35.2,23136.93,Z1->Z3
+CarrerStCarles-CarrerGirona,balanced,8.04,34.87,23145.46,Z1->Z3
+CarrerMuntaner-CarrerVilaJoiosa,fastest,5.4,21.58,16201.96,Z2->Z1
+CarrerMuntaner-CarrerVilaJoiosa,greenest,5.06,25.11,15190.93,Z2->Z1
+CarrerMuntaner-CarrerVilaJoiosa,balanced,5.07,24.33,15192.85,Z2->Z1
+CarrerTrilla-CarrerPadilla,fastest,4.58,15.52,13343.99,Z3->Z0
+CarrerTrilla-CarrerPadilla,greenest,4.26,16.18,12218.18,Z3->Z0
+CarrerTrilla-CarrerPadilla,balanced,4.26,16.18,12218.18,Z3->Z0
+EmiliaLlorcaMartin-CarrerCastillejos,fastest,5.53,22.7,19754.82,Z1->Z0
+EmiliaLlorcaMartin-CarrerCastillejos,greenest,5.27,23.79,18748.76,Z1->Z0
+EmiliaLlorcaMartin-CarrerCastillejos,balanced,5.27,23.24,18764.44,Z1->Z0

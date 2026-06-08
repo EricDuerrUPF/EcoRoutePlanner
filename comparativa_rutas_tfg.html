@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_29431b68f66c1d9b77685806adde80c7 {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+                .leaflet-container { font-size: 1rem; }
+            </style>
+
+            <style>html, body {
+                width: 100%;
+                height: 100%;
+                margin: 0;
+                padding: 0;
+            }
+            </style>
+
+            <style>#map {
+                position:absolute;
+                top:0;
+                bottom:0;
+                right:0;
+                left:0;
+                }
+            </style>
+
+            <script>
+                L_NO_TOUCH = false;
+                L_DISABLE_3D = false;
+            </script>
+
+        
+</head>
+<body>
+    
+    
+    <div id="ctrl-panel" style="
+        position:fixed; top:20px; right:20px; z-index:9999;
+        background:white; padding:16px 20px; border-radius:10px;
+        box-shadow:0 2px 12px rgba(0,0,0,0.2); min-width:230px;
+        font-family:sans-serif; font-size:13px; color:#222;">
+
+      <div style="font-weight:700;font-size:14px;margin-bottom:10px;">Route mode</div>
+
+      <div style="display:flex;gap:6px;margin-bottom:14px;">
+        <button id="btn-fastest"
+          onclick="showRoute('fastest')"
+          style="flex:1;padding:7px 4px;border-radius:6px;
+                 border:2px solid #e74c3c;background:#e74c3c;
+                 color:white;font-weight:700;cursor:pointer;font-size:12px;">
+          Fastest
+        </button>
+        <button id="btn-greenest"
+          onclick="showRoute('greenest')"
+          style="flex:1;padding:7px 4px;border-radius:6px;
+                 border:2px solid #27ae60;background:white;
+                 color:#27ae60;font-weight:700;cursor:pointer;font-size:12px;">
+          Greenest
+        </button>
+        <button id="btn-balanced"
+          onclick="showRoute('balanced')"
+          style="flex:1;padding:7px 4px;border-radius:6px;
+                 border:2px solid #2980b9;background:white;
+                 color:#2980b9;font-weight:700;cursor:pointer;font-size:12px;">
+          Balanced
+        </button>
+      </div>
+
+      <div style="border-top:1px solid #eee;padding-top:10px;margin-bottom:10px;">
+        <div style="display:flex;justify-content:space-between;margin-bottom:5px;">
+          <span style="color:#666;">Distance</span>
+          <span id="stat-dist" style="font-weight:600;">—</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;margin-bottom:5px;">
+          <span style="color:#666;">Travel time</span>
+          <span id="stat-time" style="font-weight:600;">—</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;">
+          <span style="color:#666;">AQ cost</span>
+          <span id="stat-aq" style="font-weight:600;">—</span>
+        </div>
+      </div>
+
+      <div style="border-top:1px solid #eee;padding-top:10px;font-size:11px;color:#888;">
+        Traffic level
+        <div style="display:flex;align-items:center;gap:6px;margin-top:5px;flex-wrap:wrap;">
+          <span style="display:flex;align-items:center;gap:3px;">
+            <span style="width:14px;height:8px;background:#2ecc71;border-radius:2px;display:inline-block;"></span>Free
+          </span>
+          <span style="display:flex;align-items:center;gap:3px;">
+            <span style="width:14px;height:8px;background:#f1c40f;border-radius:2px;display:inline-block;"></span>Light
+          </span>
+          <span style="display:flex;align-items:center;gap:3px;">
+            <span style="width:14px;height:8px;background:#e67e22;border-radius:2px;display:inline-block;"></span>Moderate
+          </span>
+          <span style="display:flex;align-items:center;gap:3px;">
+            <span style="width:14px;height:8px;background:#e74c3c;border-radius:2px;display:inline-block;"></span>Heavy
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <script>
+    var ROUTES       = {"fastest": {"segments": [{"coords": [[41.3752377, 2.1496463], [41.3754064, 2.1488463]], "colour": "#e74c3c", "tl": 1.0}, {"coords": [[41.3754064, 2.1488463], [41.3753586, 2.1487509]], "colour": "#e74c3c", "tl": 1.0}, {"coords": [[41.3753586, 2.1487509], [41.3749659, 2.1485339]], "colour": "#e74c3c", "tl": 1.0}, {"coords": [[41.3749659, 2.1485339], [41.3748782, 2.1485618]], "colour": "#e74c3c", "tl": 1.0}, {"coords": [[41.3748782, 2.1485618], [41.3745772, 2.1490731]], "colour": "#e74c3c", "tl": 1.0}, {"coords": [[41.3745772, 2.1490731], [41.3746929, 2.1495277]], "colour": "#e74c3c", "tl": 1.0}, {"coords": [[41.3746929, 2.1495277], [41.374823, 2.1497372]], "colour": "#e74c3c", "tl": 1.0}, {"coords": [[41.374823, 2.1497372], [41.3751364, 2.1498811]], "colour": "#e74c3c", "tl": 1.0}, {"coords": [[41.3751364, 2.1498811], [41.3761708, 2.1506496]], "colour": "#e74c3c", "tl": 1.0}, {"coords": [[41.3761708, 2.1506496], [41.3770279, 2.1517942]], "colour": "#e74c3c", "tl": 1.0}, {"coords": [[41.3770279, 2.1517942], [41.3778687, 2.1529122]], "colour": "#e74c3c", "tl": 1.0}, {"coords": [[41.3778687, 2.1529122], [41.3788174, 2.1516527]], "colour": "#e74c3c", "tl": 1.0}, {"coords": [[41.3788174, 2.1516527], [41.3795697, 2.1506836]], "colour": "#e74c3c", "tl": 1.0}, {"coords": [[41.3795697, 2.1506836], [41.3797899, 2.1503799]], "colour": "#e74c3c", "tl": 1.0}, {"coords": [[41.3797899, 2.1503799], [41.380524, 2.1494024]], "colour": "#e74c3c", "tl": 1.0}, {"coords": [[41.380524, 2.1494024], [41.3813733, 2.1482827]], "colour": "#e74c3c", "tl": 1.0}, {"coords": [[41.3813733, 2.1482827], [41.382114, 2.1492731]], "colour": "#e74c3c", "tl": 1.0}, {"coords": [[41.382114, 2.1492731], [41.3823248, 2.1495488]], "colour": "#e74c3c", "tl": 1.0}, {"coords": [[41.3823248, 2.1495488], [41.3830853, 2.1505642]], "colour": "#e74c3c", "tl": 1.0}, {"coords": [[41.3830853, 2.1505642], [41.3833449, 2.1502086]], "colour": "#e74c3c", "tl": 1.0}, {"coords": [[41.3833449, 2.1502086], [41.3834178, 2.1501064]], "colour": "#e74c3c", "tl": 1.0}, {"coords": [[41.3834178, 2.1501064], [41.3835529, 2.1499229]], "colour": "#e74c3c", "tl": 1.0}, {"coords": [[41.3835529, 2.1499229], [41.3839473, 2.1494013]], "colour": "#e74c3c", "tl": 1.0}, {"coords": [[41.3839473, 2.1494013], [41.3848063, 2.1482695]], "colour": "#e74c3c", "tl": 1.0}, {"coords": [[41.3848063, 2.1482695], [41.3856347, 2.147173]], "colour": "#e74c3c", "tl": 1.0}, {"coords": [[41.3856347, 2.147173], [41.3873511, 2.1449016]], "colour": "#2ecc71", "tl": 0.0}, {"coords": [[41.3873511, 2.1449016], [41.3876975, 2.1453756]], "colour": "#e74c3c", "tl": 1.0}, {"coords": [[41.3876975, 2.1453756], [41.388161, 2.1460028]], "colour": "#e74c3c", "tl": 1.0}, {"coords": [[41.388161, 2.1460028], [41.3890311, 2.1471617]], "colour": "#e67e22", "tl": 0.516}, {"coords": [[41.3890311, 2.1471617], [41.3898089, 2.1481906]], "colour": "#e74c3c", "tl": 1.0}, {"coords": [[41.3898089, 2.1481906], [41.3900033, 2.1484252]], "colour": "#e74c3c", "tl": 1.0}, {"coords": [[41.3900033, 2.1484252], [41.3907397, 2.1494208]], "colour": "#e74c3c", "tl": 1.0}, {"coords": [[41.3907397, 2.1494208], [41.3916165, 2.1505827]], "colour": "#e74c3c", "tl": 1.0}, {"coords": [[41.3916165, 2.1505827], [41.3924477, 2.1517144]], "colour": "#e74c3c", "tl": 1.0}, {"coords": [[41.3924477, 2.1517144], [41.3932932, 2.1528513]], "colour": "#e74c3c", "tl": 1.0}, {"coords": [[41.3932932, 2.1528513], [41.3941584, 2.1539878]], "colour": "#e74c3c", "tl": 1.0}, {"coords": [[41.3941584, 2.1539878], [41.3950168, 2.1551106]], "colour": "#e74c3c", "tl": 1.0}, {"coords": [[41.3950168, 2.1551106], [41.3941769, 2.1562201]], "colour": "#e74c3c", "tl": 1.0}, {"coords": [[41.3941769, 2.1562201], [41.3933081, 2.1573601]], "colour": "#e74c3c", "tl": 1.0}, {"coords": [[41.3933081, 2.1573601], [41.3943734, 2.1587723]], "colour": "#e74c3c", "tl": 0.613}, {"coords": [[41.3943734, 2.1587723], [41.3944848, 2.1589148]], "colour": "#e74c3c", "tl": 1.0}, {"coords": [[41.3944848, 2.1589148], [41.3956037, 2.1603634]], "colour": "#e74c3c", "tl": 1.0}, {"coords": [[41.3956037, 2.1603634], [41.3957158, 2.1605116]], "colour": "#e74c3c", "tl": 1.0}, {"coords": [[41.3957158, 2.1605116], [41.3948365, 2.1616117]], "colour": "#e74c3c", "tl": 1.0}, {"coords": [[41.3948365, 2.1616117], [41.393954, 2.1627019]], "colour": "#2ecc71", "tl": 0.0}], "stats": {"distance_m": 4173.5, "travel_time_s": 1271.3, "travel_time_min": 21.19, "pollution_cost": 9951.62}}, "greenest": {"segments": [{"coords": [[41.3752377, 2.1496463], [41.3754064, 2.1488463]], "colour": "#e74c3c", "tl": 1.0}, {"coords": [[41.3754064, 2.1488463], [41.3753586, 2.1487509]], "colour": "#e74c3c", "tl": 1.0}, {"coords": [[41.3753586, 2.1487509], [41.3749659, 2.1485339]], "colour": "#e74c3c", "tl": 1.0}, {"coords": [[41.3749659, 2.1485339], [41.3748782, 2.1485618]], "colour": "#e74c3c", "tl": 1.0}, {"coords": [[41.3748782, 2.1485618], [41.3745772, 2.1490731]], "colour": "#e74c3c", "tl": 1.0}, {"coords": [[41.3745772, 2.1490731], [41.3746929, 2.1495277]], "colour": "#e74c3c", "tl": 1.0}, {"coords": [[41.3746929, 2.1495277], [41.374823, 2.1497372]], "colour": "#e74c3c", "tl": 1.0}, {"coords": [[41.374823, 2.1497372], [41.3751364, 2.1498811]], "colour": "#e74c3c", "tl": 1.0}, {"coords": [[41.3751364, 2.1498811], [41.3761708, 2.1506496]], "colour": "#e74c3c", "tl": 1.0}, {"coords": [[41.3761708, 2.1506496], [41.3770279, 2.1517942]], "colour": "#e74c3c", "tl": 1.0}, {"coords": [[41.3770279, 2.1517942], [41.3778687, 2.1529122]], "colour": "#e74c3c", "tl": 1.0}, {"coords": [[41.3778687, 2.1529122], [41.3788174, 2.1516527]], "colour": "#e74c3c", "tl": 1.0}, {"coords": [[41.3788174, 2.1516527], [41.3795697, 2.1506836]], "colour": "#e74c3c", "tl": 1.0}, {"coords": [[41.3795697, 2.1506836], [41.3797899, 2.1503799]], "colour": "#e74c3c", "tl": 1.0}, {"coords": [[41.3797899, 2.1503799], [41.380524, 2.1494024]], "colour": "#e74c3c", "tl": 1.0}, {"coords": [[41.380524, 2.1494024], [41.3813733, 2.1482827]], "colour": "#e74c3c", "tl": 1.0}, {"coords": [[41.3813733, 2.1482827], [41.3820801, 2.1473506]], "colour": "#e74c3c", "tl": 1.0}, {"coords": [[41.3820801, 2.1473506], [41.3821632, 2.147241]], "colour": "#e74c3c", "tl": 1.0}, {"coords": [[41.3821632, 2.147241], [41.3823103, 2.147047]], "colour": "#e74c3c", "tl": 1.0}, {"coords": [[41.3823103, 2.147047], [41.3830927, 2.1460276]], "colour": "#e74c3c", "tl": 1.0}, {"coords": [[41.3830927, 2.1460276], [41.3839299, 2.1449369]], "colour": "#e74c3c", "tl": 1.0}, {"coords": [[41.3839299, 2.1449369], [41.3847684, 2.1460751]], "colour": "#e74c3c", "tl": 1.0}, {"coords": [[41.3847684, 2.1460751], [41.3856347, 2.147173]], "colour": "#e74c3c", "tl": 1.0}, {"coords": [[41.3856347, 2.147173], [41.3873511, 2.1449016]], "colour": "#2ecc71", "tl": 0.0}, {"coords": [[41.3873511, 2.1449016], [41.3876975, 2.1453756]], "colour": "#e74c3c", "tl": 1.0}, {"coords": [[41.3876975, 2.1453756], [41.388161, 2.1460028]], "colour": "#e74c3c", "tl": 1.0}, {"coords": [[41.388161, 2.1460028], [41.3890311, 2.1471617]], "colour": "#e67e22", "tl": 0.516}, {"coords": [[41.3890311, 2.1471617], [41.3898089, 2.1481906]], "colour": "#e74c3c", "tl": 1.0}, {"coords": [[41.3898089, 2.1481906], [41.3900033, 2.1484252]], "colour": "#e74c3c", "tl": 1.0}, {"coords": [[41.3900033, 2.1484252], [41.3907397, 2.1494208]], "colour": "#e74c3c", "tl": 1.0}, {"coords": [[41.3907397, 2.1494208], [41.3916165, 2.1505827]], "colour": "#e74c3c", "tl": 1.0}, {"coords": [[41.3916165, 2.1505827], [41.3924477, 2.1517144]], "colour": "#e74c3c", "tl": 1.0}, {"coords": [[41.3924477, 2.1517144], [41.3932932, 2.1528513]], "colour": "#e74c3c", "tl": 1.0}, {"coords": [[41.3932932, 2.1528513], [41.3941584, 2.1539878]], "colour": "#e74c3c", "tl": 1.0}, {"coords": [[41.3941584, 2.1539878], [41.3933242, 2.1550982]], "colour": "#e74c3c", "tl": 1.0}, {"coords": [[41.3933242, 2.1550982], [41.3924762, 2.1562328]], "colour": "#e74c3c", "tl": 1.0}, {"coords": [[41.3924762, 2.1562328], [41.3933081, 2.1573601]], "colour": "#e74c3c", "tl": 1.0}, {"coords": [[41.3933081, 2.1573601], [41.3943734, 2.1587723]], "colour": "#e74c3c", "tl": 0.613}, {"coords": [[41.3943734, 2.1587723], [41.3944848, 2.1589148]], "colour": "#e74c3c", "tl": 1.0}, {"coords": [[41.3944848, 2.1589148], [41.3956037, 2.1603634]], "colour": "#e74c3c", "tl": 1.0}, {"coords": [[41.3956037, 2.1603634], [41.3957158, 2.1605116]], "colour": "#e74c3c", "tl": 1.0}, {"coords": [[41.3957158, 2.1605116], [41.3948365, 2.1616117]], "colour": "#e74c3c", "tl": 1.0}, {"coords": [[41.3948365, 2.1616117], [41.393954, 2.1627019]], "colour": "#2ecc71", "tl": 0.0}], "stats": {"distance_m": 4164.0, "travel_time_s": 1314.1, "travel_time_min": 21.9, "pollution_cost": 9929.2}}, "balanced": {"segments": [{"coords": [[41.3752377, 2.1496463], [41.3754064, 2.1488463]], "colour": "#e74c3c", "tl": 1.0}, {"coords": [[41.3754064, 2.1488463], [41.3753586, 2.1487509]], "colour": "#e74c3c", "tl": 1.0}, {"coords": [[41.3753586, 2.1487509], [41.3749659, 2.1485339]], "colour": "#e74c3c", "tl": 1.0}, {"coords": [[41.3749659, 2.1485339], [41.3748782, 2.1485618]], "colour": "#e74c3c", "tl": 1.0}, {"coords": [[41.3748782, 2.1485618], [41.3745772, 2.1490731]], "colour": "#e74c3c", "tl": 1.0}, {"coords": [[41.3745772, 2.1490731], [41.3746929, 2.1495277]], "colour": "#e74c3c", "tl": 1.0}, {"coords": [[41.3746929, 2.1495277], [41.374823, 2.1497372]], "colour": "#e74c3c", "tl": 1.0}, {"coords": [[41.374823, 2.1497372], [41.3751364, 2.1498811]], "colour": "#e74c3c", "tl": 1.0}, {"coords": [[41.3751364, 2.1498811], [41.3761708, 2.1506496]], "colour": "#e74c3c", "tl": 1.0}, {"coords": [[41.3761708, 2.1506496], [41.3770279, 2.1517942]], "colour": "#e74c3c", "tl": 1.0}, {"coords": [[41.3770279, 2.1517942], [41.3778687, 2.1529122]], "colour": "#e74c3c", "tl": 1.0}, {"coords": [[41.3778687, 2.1529122], [41.3788174, 2.1516527]], "colour": "#e74c3c", "tl": 1.0}, {"coords": [[41.3788174, 2.1516527], [41.3795697, 2.1506836]], "colour": "#e74c3c", "tl": 1.0}, {"coords": [[41.3795697, 2.1506836], [41.3797899, 2.1503799]], "colour": "#e74c3c", "tl": 1.0}, {"coords": [[41.3797899, 2.1503799], [41.380524, 2.1494024]], "colour": "#e74c3c", "tl": 1.0}, {"coords": [[41.380524, 2.1494024], [41.3813733, 2.1482827]], "colour": "#e74c3c", "tl": 1.0}, {"coords": [[41.3813733, 2.1482827], [41.382114, 2.1492731]], "colour": "#e74c3c", "tl": 1.0}, {"coords": [[41.382114, 2.1492731], [41.3823248, 2.1495488]], "colour": "#e74c3c", "tl": 1.0}, {"coords": [[41.3823248, 2.1495488], [41.3830853, 2.1505642]], "colour": "#e74c3c", "tl": 1.0}, {"coords": [[41.3830853, 2.1505642], [41.3833449, 2.1502086]], "colour": "#e74c3c", "tl": 1.0}, {"coords": [[41.3833449, 2.1502086], [41.3834178, 2.1501064]], "colour": "#e74c3c", "tl": 1.0}, {"coords": [[41.3834178, 2.1501064], [41.3835529, 2.1499229]], "colour": "#e74c3c", "tl": 1.0}, {"coords": [[41.3835529, 2.1499229], [41.3839473, 2.1494013]], "colour": "#e74c3c", "tl": 1.0}, {"coords": [[41.3839473, 2.1494013], [41.3848063, 2.1482695]], "colour": "#e74c3c", "tl": 1.0}, {"coords": [[41.3848063, 2.1482695], [41.3856347, 2.147173]], "colour": "#e74c3c", "tl": 1.0}, {"coords": [[41.3856347, 2.147173], [41.3873511, 2.1449016]], "colour": "#2ecc71", "tl": 0.0}, {"coords": [[41.3873511, 2.1449016], [41.3876975, 2.1453756]], "colour": "#e74c3c", "tl": 1.0}, {"coords": [[41.3876975, 2.1453756], [41.388161, 2.1460028]], "colour": "#e74c3c", "tl": 1.0}, {"coords": [[41.388161, 2.1460028], [41.3890311, 2.1471617]], "colour": "#e67e22", "tl": 0.516}, {"coords": [[41.3890311, 2.1471617], [41.3898089, 2.1481906]], "colour": "#e74c3c", "tl": 1.0}, {"coords": [[41.3898089, 2.1481906], [41.3900033, 2.1484252]], "colour": "#e74c3c", "tl": 1.0}, {"coords": [[41.3900033, 2.1484252], [41.3907397, 2.1494208]], "colour": "#e74c3c", "tl": 1.0}, {"coords": [[41.3907397, 2.1494208], [41.3916165, 2.1505827]], "colour": "#e74c3c", "tl": 1.0}, {"coords": [[41.3916165, 2.1505827], [41.3924477, 2.1517144]], "colour": "#e74c3c", "tl": 1.0}, {"coords": [[41.3924477, 2.1517144], [41.3932932, 2.1528513]], "colour": "#e74c3c", "tl": 1.0}, {"coords": [[41.3932932, 2.1528513], [41.3941584, 2.1539878]], "colour": "#e74c3c", "tl": 1.0}, {"coords": [[41.3941584, 2.1539878], [41.3933242, 2.1550982]], "colour": "#e74c3c", "tl": 1.0}, {"coords": [[41.3933242, 2.1550982], [41.3924762, 2.1562328]], "colour": "#e74c3c", "tl": 1.0}, {"coords": [[41.3924762, 2.1562328], [41.3933081, 2.1573601]], "colour": "#e74c3c", "tl": 1.0}, {"coords": [[41.3933081, 2.1573601], [41.3943734, 2.1587723]], "colour": "#e74c3c", "tl": 0.613}, {"coords": [[41.3943734, 2.1587723], [41.3944848, 2.1589148]], "colour": "#e74c3c", "tl": 1.0}, {"coords": [[41.3944848, 2.1589148], [41.3956037, 2.1603634]], "colour": "#e74c3c", "tl": 1.0}, {"coords": [[41.3956037, 2.1603634], [41.3957158, 2.1605116]], "colour": "#e74c3c", "tl": 1.0}, {"coords": [[41.3957158, 2.1605116], [41.3948365, 2.1616117]], "colour": "#e74c3c", "tl": 1.0}, {"coords": [[41.3948365, 2.1616117], [41.393954, 2.1627019]], "colour": "#2ecc71", "tl": 0.0}], "stats": {"distance_m": 4169.4, "travel_time_s": 1277.9, "travel_time_min": 21.3, "pollution_cost": 9942.23}}};
+    var activeLayers = [];   // Leaflet polyline objects currently on the map
+    var theMap       = null; // resolved once on first showRoute call
+
+    function getMap() {
+      if (theMap) return theMap;
+      // Leaflet stores every map instance in L.Map._instances (v1.x)
+      // Fall back to scanning window for the folium-generated variable
+      var instances = Object.values(L.Map._instances || {});
+      if (instances.length) { theMap = instances[0]; return theMap; }
+      // last-resort: find the first property on window that looks like a map
+      for (var k in window) {
+        try {
+          if (window[k] && window[k]._container && typeof window[k].addLayer === 'function') {
+            theMap = window[k]; return theMap;
+          }
+        } catch(e) {}
+      }
+      return null;
+    }
+
+    function showRoute(mode) {
+      var map = getMap();
+      if (!map) { console.warn('Map not ready yet'); return; }
+
+      // 1. Remove every polyline from the previous selection
+      activeLayers.forEach(function(pl) { pl.remove(); });
+      activeLayers = [];
+
+      // 2. Draw the selected route edge by edge
+      var route = ROUTES[mode];
+      if (!route) return;
+      route.segments.forEach(function(seg) {
+        var pl = L.polyline(seg.coords, {
+          color:   seg.colour,
+          weight:  6,
+          opacity: 0.9,
+        });
+        pl.addTo(map);
+        activeLayers.push(pl);
+      });
+
+      // 3. Update stats panel
+      var s = route.stats;
+      document.getElementById('stat-dist').textContent =
+        (s.distance_m / 1000).toFixed(2) + ' km';
+      document.getElementById('stat-time').textContent =
+        s.travel_time_min + ' min';
+      document.getElementById('stat-aq').textContent =
+        s.pollution_cost.toFixed(0);
+
+      // 4. Update button active state
+      var accent = {fastest:'#e74c3c', greenest:'#27ae60', balanced:'#2980b9'};
+      ['fastest','greenest','balanced'].forEach(function(m) {
+        var btn = document.getElementById('btn-' + m);
+        if (!btn) return;
+        if (m === mode) {
+          btn.style.background = accent[m];
+          btn.style.color      = 'white';
+        } else {
+          btn.style.background = 'white';
+          btn.style.color      = accent[m];
+        }
+      });
+    }
+
+    // Initialise after page load so Leaflet map is fully ready
+    window.addEventListener('load', function() {
+      showRoute('fastest');
+    });
+    </script>
+    
+    
+            <div class="folium-map" id="map_29431b68f66c1d9b77685806adde80c7" ></div>
+        
+</body>
+<script>
+    
+    
+            var map_29431b68f66c1d9b77685806adde80c7 = L.map(
+                "map_29431b68f66c1d9b77685806adde80c7",
+                {
+                    center: [41.3752377, 2.1496463],
+                    crs: L.CRS.EPSG3857,
+                    ...{
+  "zoom": 15,
+  "zoomControl": true,
+  "preferCanvas": false,
+}
+
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_d38e75feb60bf8e9d4acfe68cfdcbe73 = L.tileLayer(
+                "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+                {
+  "minZoom": 0,
+  "maxZoom": 19,
+  "maxNativeZoom": 19,
+  "noWrap": false,
+  "attribution": "\u0026copy; \u003ca href=\"https://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors",
+  "subdomains": "abc",
+  "detectRetina": false,
+  "tms": false,
+  "opacity": 1,
+}
+
+            );
+        
+    
+            tile_layer_d38e75feb60bf8e9d4acfe68cfdcbe73.addTo(map_29431b68f66c1d9b77685806adde80c7);
+        
+    
+            var marker_d8e4cb1546c9be88f4322e24b411986f = L.marker(
+                [41.3752377, 2.1496463],
+                {
+}
+            ).addTo(map_29431b68f66c1d9b77685806adde80c7);
+        
+    
+            var icon_29e5ea427e760d4be250564fcb4fabfa = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "green",
+  "iconColor": "white",
+  "icon": "play",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_a6f6073979762dbd14d10de3165f7594 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_ca8fa95a211fa57a9299c7fbbab44bf9 = $(`<div id="html_ca8fa95a211fa57a9299c7fbbab44bf9" style="width: 100.0%; height: 100.0%;">Start</div>`)[0];
+                popup_a6f6073979762dbd14d10de3165f7594.setContent(html_ca8fa95a211fa57a9299c7fbbab44bf9);
+            
+        
+
+        marker_d8e4cb1546c9be88f4322e24b411986f.bindPopup(popup_a6f6073979762dbd14d10de3165f7594)
+        ;
+
+        
+    
+    
+                marker_d8e4cb1546c9be88f4322e24b411986f.setIcon(icon_29e5ea427e760d4be250564fcb4fabfa);
+            
+    
+            var marker_e2a5e6014df483b14c553a086f59fdc3 = L.marker(
+                [41.393954, 2.1627019],
+                {
+}
+            ).addTo(map_29431b68f66c1d9b77685806adde80c7);
+        
+    
+            var icon_08fd8b7239c6cf05c6cac34ce507ceeb = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "stop",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_be47fb38bc084f2c0bde73db7e9f8715 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_7fde4c23925480269b1fe3edec7861ed = $(`<div id="html_7fde4c23925480269b1fe3edec7861ed" style="width: 100.0%; height: 100.0%;">End</div>`)[0];
+                popup_be47fb38bc084f2c0bde73db7e9f8715.setContent(html_7fde4c23925480269b1fe3edec7861ed);
+            
+        
+
+        marker_e2a5e6014df483b14c553a086f59fdc3.bindPopup(popup_be47fb38bc084f2c0bde73db7e9f8715)
+        ;
+
+        
+    
+    
+                marker_e2a5e6014df483b14c553a086f59fdc3.setIcon(icon_08fd8b7239c6cf05c6cac34ce507ceeb);
+            
+</script>
+</html>
