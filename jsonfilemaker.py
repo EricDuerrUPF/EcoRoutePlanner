@@ -191,6 +191,6 @@ legend_html = '''
 '''
 m.get_root().html.add_child(folium.Element(legend_html))
 
-out_map = 'barcelona_traffic_osm.html'
+out_map = 'misc/barcelona_traffic_osm.html'
 m.save(out_map)
 print(f"   Map saved to {out_map} – open in your browser.")

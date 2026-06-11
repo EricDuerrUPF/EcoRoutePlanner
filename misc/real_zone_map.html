@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_456bac7b73c2a3c8b8c556b2cb833877 {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+                .leaflet-container { font-size: 1rem; }
+            </style>
+
+            <style>html, body {
+                width: 100%;
+                height: 100%;
+                margin: 0;
+                padding: 0;
+            }
+            </style>
+
+            <style>#map {
+                position:absolute;
+                top:0;
+                bottom:0;
+                right:0;
+                left:0;
+                }
+            </style>
+
+            <script>
+                L_NO_TOUCH = false;
+                L_DISABLE_3D = false;
+            </script>
+
+        
+</head>
+<body>
+    
+    
+            <div class="folium-map" id="map_456bac7b73c2a3c8b8c556b2cb833877" ></div>
+        
+</body>
+<script>
+    
+    
+            var map_456bac7b73c2a3c8b8c556b2cb833877 = L.map(
+                "map_456bac7b73c2a3c8b8c556b2cb833877",
+                {
+                    center: [41.387, 2.168],
+                    crs: L.CRS.EPSG3857,
+                    ...{
+  "zoom": 13,
+  "zoomControl": true,
+  "preferCanvas": false,
+}
+
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_f963a4245f165381602b649fa8203969 = L.tileLayer(
+                "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png",
+                {
+  "minZoom": 0,
+  "maxZoom": 20,
+  "maxNativeZoom": 20,
+  "noWrap": false,
+  "attribution": "\u0026copy; \u003ca href=\"https://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors \u0026copy; \u003ca href=\"https://carto.com/attributions\"\u003eCARTO\u003c/a\u003e",
+  "subdomains": "abcd",
+  "detectRetina": false,
+  "tms": false,
+  "opacity": 1,
+}
+
+            );
+        
+    
+            tile_layer_f963a4245f165381602b649fa8203969.addTo(map_456bac7b73c2a3c8b8c556b2cb833877);
+        
+    
+            var polygon_fc85a493e418ce6e2e9f671f5abf2374 = L.polygon(
+                [[41.3854069, 2.1640511], [41.3910367, 2.163357], [41.3975828, 2.1629779], [41.4039543, 2.1647243], [41.4047828, 2.1658339], [41.4041298, 2.1814195], [41.4015839, 2.1893122], [41.4007445, 2.1904242], [41.3990576, 2.1904602], [41.3973815, 2.1904297], [41.3923147, 2.1902736], [41.3869909, 2.1840134], [41.3869102, 2.1839068], [41.3854781, 2.1766904], [41.3854069, 2.1640511]],
+                {"bubblingMouseEvents": true, "color": "#e74c3c", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#e74c3c", "fillOpacity": 0.3, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 1.0, "smoothFactor": 1.0, "stroke": true, "weight": 3}
+            ).addTo(map_456bac7b73c2a3c8b8c556b2cb833877);
+        
+    
+        var popup_fa9b9c4ae58c195ac35dc1f84ef83308 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_96810de614bc083c1a81ccfa8b2b44d7 = $(`<div id="html_96810de614bc083c1a81ccfa8b2b44d7" style="width: 100.0%; height: 100.0%;"><b>Zona 0: Gràcia / Les Corts</b><br>Nodos: 445</div>`)[0];
+                popup_fa9b9c4ae58c195ac35dc1f84ef83308.setContent(html_96810de614bc083c1a81ccfa8b2b44d7);
+            
+        
+
+        polygon_fc85a493e418ce6e2e9f671f5abf2374.bindPopup(popup_fa9b9c4ae58c195ac35dc1f84ef83308)
+        ;
+
+        
+    
+    
+            polygon_fc85a493e418ce6e2e9f671f5abf2374.bindTooltip(
+                `<div>
+                     Zona 0
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_2c8d84b717fbfb17335f5347bfd214b5 = L.marker(
+                [41.395150300142966, 2.175905367645077],
+                {
+}
+            ).addTo(map_456bac7b73c2a3c8b8c556b2cb833877);
+        
+    
+            var div_icon_e3e911ff0feb49074bcb3fa1c67dbbf6 = L.divIcon({
+  "html": "\u003cdiv style=\"color: white; background: #e74c3c; padding: 2px 5px; border-radius: 5px; font-weight: bold; font-size: 10px;\"\u003eZ0\u003c/div\u003e",
+  "className": "empty",
+});
+        
+    
+                marker_2c8d84b717fbfb17335f5347bfd214b5.setIcon(div_icon_e3e911ff0feb49074bcb3fa1c67dbbf6);
+            
+    
+            var polygon_52791468d3f8f5533cad0b64aedc1010 = L.polygon(
+                [[41.3694676, 2.166846], [41.3705003, 2.1654732], [41.3750369, 2.1654765], [41.3865457, 2.1663094], [41.3882767, 2.1672895], [41.3896867, 2.1734065], [41.3868082, 2.1881204], [41.383839, 2.1907484], [41.3822843, 2.1913329], [41.3797083, 2.1919108], [41.3787851, 2.1915421], [41.3700925, 2.187743], [41.3694676, 2.166846]],
+                {"bubblingMouseEvents": true, "color": "#2980b9", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#2980b9", "fillOpacity": 0.3, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 1.0, "smoothFactor": 1.0, "stroke": true, "weight": 3}
+            ).addTo(map_456bac7b73c2a3c8b8c556b2cb833877);
+        
+    
+        var popup_101aa25d072d73ad62ed83bb05a86f1c = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_23d6f050194d0b545e19e15c0c28b0d7 = $(`<div id="html_23d6f050194d0b545e19e15c0c28b0d7" style="width: 100.0%; height: 100.0%;"><b>Zona 1: Eixample Est / Barceloneta</b><br>Nodos: 414</div>`)[0];
+                popup_101aa25d072d73ad62ed83bb05a86f1c.setContent(html_23d6f050194d0b545e19e15c0c28b0d7);
+            
+        
+
+        polygon_52791468d3f8f5533cad0b64aedc1010.bindPopup(popup_101aa25d072d73ad62ed83bb05a86f1c)
+        ;
+
+        
+    
+    
+            polygon_52791468d3f8f5533cad0b64aedc1010.bindTooltip(
+                `<div>
+                     Zona 1
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_2f4c48bccd80c0a768a43e7a0a2a677c = L.marker(
+                [41.37909802656297, 2.1777145777320412],
+                {
+}
+            ).addTo(map_456bac7b73c2a3c8b8c556b2cb833877);
+        
+    
+            var div_icon_0208dbc746fa9f87ef1506dcd33eabeb = L.divIcon({
+  "html": "\u003cdiv style=\"color: white; background: #2980b9; padding: 2px 5px; border-radius: 5px; font-weight: bold; font-size: 10px;\"\u003eZ1\u003c/div\u003e",
+  "className": "empty",
+});
+        
+    
+                marker_2f4c48bccd80c0a768a43e7a0a2a677c.setIcon(div_icon_0208dbc746fa9f87ef1506dcd33eabeb);
+            
+    
+            var polygon_b705e753da40f55ed3fa44d9f59c4078 = L.polygon(
+                [[41.3691573, 2.1458721], [41.3737718, 2.1441589], [41.3770531, 2.1441264], [41.3808901, 2.1444131], [41.3873511, 2.1449016], [41.388161, 2.1460028], [41.3899131, 2.157333], [41.389897, 2.1596326], [41.3894577, 2.165819], [41.3892418, 2.1682932], [41.3879371, 2.1702232], [41.3869292, 2.1712248], [41.3830559, 2.1717935], [41.3723498, 2.1719867], [41.3705352, 2.1705164], [41.3704443, 2.1703565], [41.3694676, 2.166846], [41.3691573, 2.1458721]],
+                {"bubblingMouseEvents": true, "color": "#27ae60", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#27ae60", "fillOpacity": 0.3, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 1.0, "smoothFactor": 1.0, "stroke": true, "weight": 3}
+            ).addTo(map_456bac7b73c2a3c8b8c556b2cb833877);
+        
+    
+        var popup_784b111fe04757deb9d4ea3df00c44d7 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_456690ab5f6e9acf0f9edd161c2ef87c = $(`<div id="html_456690ab5f6e9acf0f9edd161c2ef87c" style="width: 100.0%; height: 100.0%;"><b>Zona 2: Eixample Oest / Sants</b><br>Nodos: 528</div>`)[0];
+                popup_784b111fe04757deb9d4ea3df00c44d7.setContent(html_456690ab5f6e9acf0f9edd161c2ef87c);
+            
+        
+
+        polygon_b705e753da40f55ed3fa44d9f59c4078.bindPopup(popup_784b111fe04757deb9d4ea3df00c44d7)
+        ;
+
+        
+    
+    
+            polygon_b705e753da40f55ed3fa44d9f59c4078.bindTooltip(
+                `<div>
+                     Zona 2
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_e82be6ebb5649dd0e3bae867262e3983 = L.marker(
+                [41.379288153353706, 2.1580817177789045],
+                {
+}
+            ).addTo(map_456bac7b73c2a3c8b8c556b2cb833877);
+        
+    
+            var div_icon_809a2670b302fddde0b2cfb6399e2b9c = L.divIcon({
+  "html": "\u003cdiv style=\"color: white; background: #27ae60; padding: 2px 5px; border-radius: 5px; font-weight: bold; font-size: 10px;\"\u003eZ2\u003c/div\u003e",
+  "className": "empty",
+});
+        
+    
+                marker_e82be6ebb5649dd0e3bae867262e3983.setIcon(div_icon_809a2670b302fddde0b2cfb6399e2b9c);
+            
+    
+            var polygon_0d8478ccd301e62350f68609287b862c = L.polygon(
+                [[41.3847684, 2.1460751], [41.3856377, 2.1449091], [41.3885581, 2.1442447], [41.394955, 2.1440826], [41.4045273, 2.1443193], [41.4049332, 2.1448689], [41.4049364, 2.1464342], [41.4049197, 2.1635385], [41.4047828, 2.1658339], [41.404359, 2.1675048], [41.4034957, 2.1686421], [41.3991631, 2.1696082], [41.3942478, 2.1696261], [41.389593, 2.16837], [41.3882767, 2.1672895], [41.3871122, 2.1655422], [41.3864884, 2.1618459], [41.3853008, 2.1543898], [41.3848063, 2.1482695], [41.3847684, 2.1460751]],
+                {"bubblingMouseEvents": true, "color": "#f39c12", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#f39c12", "fillOpacity": 0.3, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 1.0, "smoothFactor": 1.0, "stroke": true, "weight": 3}
+            ).addTo(map_456bac7b73c2a3c8b8c556b2cb833877);
+        
+    
+        var popup_67ec3dd1e245cfa0137f2b40c6079c78 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_8f2aa7af8401b3743f4c049b7108b635 = $(`<div id="html_8f2aa7af8401b3743f4c049b7108b635" style="width: 100.0%; height: 100.0%;"><b>Zona 3: Sarrià / Sagrada Família</b><br>Nodos: 590</div>`)[0];
+                popup_67ec3dd1e245cfa0137f2b40c6079c78.setContent(html_8f2aa7af8401b3743f4c049b7108b635);
+            
+        
+
+        polygon_0d8478ccd301e62350f68609287b862c.bindPopup(popup_67ec3dd1e245cfa0137f2b40c6079c78)
+        ;
+
+        
+    
+    
+            polygon_0d8478ccd301e62350f68609287b862c.bindTooltip(
+                `<div>
+                     Zona 3
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_6b132d3b5ee20835fb096fd7b3341243 = L.marker(
+                [41.39542734436935, 2.156262143732508],
+                {
+}
+            ).addTo(map_456bac7b73c2a3c8b8c556b2cb833877);
+        
+    
+            var div_icon_d322e9057e5708cab29865d3b8e23bd5 = L.divIcon({
+  "html": "\u003cdiv style=\"color: white; background: #f39c12; padding: 2px 5px; border-radius: 5px; font-weight: bold; font-size: 10px;\"\u003eZ3\u003c/div\u003e",
+  "className": "empty",
+});
+        
+    
+                marker_6b132d3b5ee20835fb096fd7b3341243.setIcon(div_icon_d322e9057e5708cab29865d3b8e23bd5);
+            
+</script>
+</html>

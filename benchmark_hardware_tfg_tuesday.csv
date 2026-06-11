@@ -1,0 +1,9 @@
+Environment,Zone,Queries_Analyzed,Min_Latency_ms,Avg_Latency_ms,Max_Latency_ms,Percentile_95_ms,Std_Dev_ms
+Localhost,Zone 0,100,4.73,5.38,7.65,6.38,0.5
+Localhost,Zone 1,100,3.59,4.95,34.31,5.5,3.19
+Localhost,Zone 2,100,4.75,5.36,8.23,6.3,0.51
+Localhost,Zone 3,100,3.47,4.87,47.32,6.59,4.38
+Raspberry_Pi,Zone 0,100,45.43,108.32,189.66,147.34,24.59
+Raspberry_Pi,Zone 1,100,30.47,109.15,223.43,166.78,35.26
+Raspberry_Pi,Zone 2,100,40.52,110.7,442.29,145.13,39.91
+Raspberry_Pi,Zone 3,100,38.61,116.14,205.98,166.21,33.25

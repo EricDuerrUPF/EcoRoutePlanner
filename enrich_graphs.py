@@ -5,14 +5,14 @@ from scipy.spatial import cKDTree
 import numpy as np
 import os
 
-# --- CONFIGURACIÓN ---
-FILE_VALORES = "data/Qualitat_Aire_Detall.csv"
-FILE_ESTACIONES = "data/2026_qualitat_aire_estacions.csv"
+# --- CONFIGURATION ---
+DATA_FILE = "data/Qualitat_Aire_Detall.csv"
+STATIONS_FILE = "data/2026_qualitat_aire_estacions.csv"
 ZONAS = ["subgraph_zone_0.graphml", "subgraph_zone_1.graphml", "subgraph_zone_2.graphml", "subgraph_zone_3.graphml"]
 
 def get_actual_pollution_data():
-    """Procesa el CSV de valores para obtener la última hora válida de NO2, PM10 y PM2.5"""
-    df = pd.read_csv(FILE_VALORES)
+    """Processes the CSV of values to get the last valid hour of NO2, PM10, and PM2.5 for each station"""
+    df = pd.read_csv(DATA_FILE)
     codis_interes = {8: 'no2', 10: 'pm10', 9: 'pm25'}
     df_filtrado = df[df['CODI_CONTAMINANT'].isin(codis_interes.keys())].copy()
 
@@ -23,46 +23,46 @@ def get_actual_pollution_data():
         return np.nan
 
     df_filtrado['valor'] = df_filtrado.apply(obtener_ultimo_valor, axis=1)
-    # Pivotamos para tener una fila por estación con sus 3 contaminantes
+    # Pivot to have one row per station with its 3 pollutants as columns
     res = df_filtrado.groupby(['ESTACIO', 'CODI_CONTAMINANT'])['valor'].last().unstack()
     res.columns = [codis_interes[c] for c in res.columns]
-    return res.fillna(res.mean()) # Rellenamos huecos con la media de la ciudad
+    return res.fillna(res.mean()) # Fill missing values with the mean of each pollutant across all stations, ensuring we have data for every station
 
 def get_stations_geo():
-    """Obtiene lat/lon de cada estación del archivo que me has pasado"""
-    df = pd.read_csv(FILE_ESTACIONES)
+    """Obtains lat/lon of each station from the provided file, ensuring we have unique stations and only the necessary columns"""
+    df = pd.read_csv(STATIONS_FILE)
     return df.drop_duplicates(subset=['Estacio'])[['Estacio', 'Latitud', 'Longitud']]
 
 def enrich():
-    print("[*] Iniciando proceso de enriquecimiento con datos reales...")
+    print("[*] Starting process of enriching with real data...")
     
-    # 1. Preparar datos maestros
+    # 1. Prepare master data
     df_valores = get_actual_pollution_data()
     df_geo = get_stations_geo()
-    # Unimos: ID | Lat | Lon | no2 | pm10 | pm25
+    # Join: ID | Lat | Lon | no2 | pm10 | pm25
     master_aire = df_geo.merge(df_valores, left_on='Estacio', right_index=True)
     
-    # 2. Árbol de búsqueda espacial
+    # 2. Spatial search tree for nearest station lookup
     tree = cKDTree(master_aire[['Latitud', 'Longitud']].values)
     
-    # 3. Procesar cada zona
-    for zona_file in ZONAS:
-        if not os.path.exists(zona_file):
+    # 3. Process each zone graph
+    for file_zone in ZONAS:
+        if not os.path.exists(file_zone):
             continue
             
-        print(f" -> Procesando {zona_file}...")
-        G = ox.load_graphml(zona_file)
+        print(f" -> Processing {file_zone}...")
+        G = ox.load_graphml(file_zone)
         
         for u, v, k, data in G.edges(keys=True, data=True):
-            # Coordenadas del nodo origen
+            # Origin node coordinates
             node = G.nodes[u]
-            point = [float(node['y']), float(node['x'])] # Assegurem float aquí també
+            point = [float(node['y']), float(node['x'])] # Ensure float here as well
             
-            # Buscar estación más cercana
+            # Search for the nearest station
             dist, idx = tree.query(point)
             estacion = master_aire.iloc[idx]
             
-            # 1. Inyectar atributos forzando float()
+            # 1. Inject attributes by forcing float()
             no2_val = float(estacion['no2'])
             pm10_val = float(estacion['pm10'])
             pm25_val = float(estacion['pm25'])
@@ -72,18 +72,18 @@ def enrich():
             data['real_pm10'] = pm10_val
             data['real_pm25'] = pm25_val
             
-            # 2. Càlcul de l'impacte (Assegurem que tot és aritmètica de floats)
+            # 2. Calculation of the impact (Ensure all are float arithmetic)
             impacto = (no2_val/40.0 + pm10_val/50.0 + pm25_val/25.0) / 3.0
             
-            # 3. Assignació definitiva (Això és el que Dijkstra sumarà)
+            # 3. Final assignment (This is what Dijkstra will sum up as "cost" for the edge)
             #data['pollution_cost'] = float(length_val * (1.0 + impacto))
             data['pollution_cost'] = float(length_val * (1.0 + (impacto * 5)))
             data['balanced_weight'] = float((length_val * 0.5) + (data['pollution_cost'] * 0.5))
-            data['length'] = length_val # També sobreescrivim length per si era un str
+            data['length'] = length_val # Over-write length in case of str
 
-        # Guardar el grafo actualizado
-        ox.save_graphml(G, zona_file.replace(".graphml", "_enriched.graphml"))
-        print(f" [OK] {zona_file} enriquecido.")
+        # Save the updated graphml with enriched attributes
+        ox.save_graphml(G, file_zone.replace(".graphml", "_enriched.graphml"))
+        print(f" [OK] {file_zone} enriched.")
 
 if __name__ == "__main__":
     enrich()

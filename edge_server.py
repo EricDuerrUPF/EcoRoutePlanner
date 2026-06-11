@@ -245,14 +245,14 @@ def calcular_tramo(request: RouteRequest):
 
     #Depuration log
     if s_node not in G_local.nodes:
-        print(f"[!] ERROR ZONA {ZONE_ID}: Nodo Origen {s_node} NO ENCONTRADO")
+        print(f"[!] ZONE ERROR {ZONE_ID}: Origin Node {s_node} NOT FOUND")
     if e_node not in G_local.nodes:
-        print(f"[!] ERROR ZONA {ZONE_ID}: Nodo Destino {e_node} NO ENCONTRADO")
+        print(f"[!] ZONE ERROR {ZONE_ID}: Destination Node {e_node} NOT FOUND")
 
     if s_node not in G_local.nodes or e_node not in G_local.nodes:
-        # CAMBIO: Usamos 422 para saber que el error es de DATOS (nodos), no de la URL
+        # Using 422 to know that the error is of DATA (nodes), not URL
         raise HTTPException(status_code=422, 
-                            detail=f"Nodos {s_node}-{e_node} no existen en la Zona {ZONE_ID}")
+                            detail=f"Nodes {s_node}-{e_node} do not exist in Zone {ZONE_ID}")
     
     
     MODE_TO_WEIGHT = {

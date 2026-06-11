@@ -141,7 +141,7 @@ def traffic_colour(level: float) -> str:
 
 # ── Map generation ────────────────────────────────────────────────────────────
 
-def build_map(results: dict, G_mapa, output="comparativa_rutas_tfg.html"):
+def build_map(results: dict, G_mapa, output="comparison_routes_tfg.html"):
     """
     results: {mode: {"path": [...], "stats": {...}, "edge_traffic": [...]}}
 
@@ -413,16 +413,16 @@ rutas_test = [
     ("EmiliaLlorcaMartin-CarrerCastillejos", 30343643, 243339207, 1, 0)
 ]
 
-resultados_finales = []
+final_results = []
 
-print("\n🚀 Iniciando batería de tests para la memoria del TFG...")
+print("\n🚀 Starting battery of tests for the thesis writing...")
 
 for nombre, start_node, end_node, z_orig, z_dest in rutas_test:
     for modo in ["fastest", "greenest", "balanced"]:
         path, stats, _ = get_distributed_route(start_node, end_node, z_orig, z_dest, mode=modo)
         
         if stats:
-            resultados_finales.append({
+            final_results.append({
                 "Ruta": nombre,
                 "Modo": modo,
                 "Distancia_km": round(stats["distance_m"] / 1000, 2),
@@ -431,11 +431,11 @@ for nombre, start_node, end_node, z_orig, z_dest in rutas_test:
                 "Zonas": f"Z{z_orig}->Z{z_dest}"
             })
 
-# 2. Guardar en CSV
-keys = resultados_finales[0].keys()
+# 2. Save in CSV
+keys = final_results[0].keys()
 with open('estadisticas_rutas_tfg.csv', 'w', newline='') as f:
     dict_writer = csv.DictWriter(f, fieldnames=keys)
     dict_writer.writeheader()
-    dict_writer.writerows(resultados_finales)
+    dict_writer.writerows(final_results)
 
-print("\n✅ ¡Tabla generada! Abre 'estadisticas_rutas_tfg.csv' para ver los datos.")
+print("\n✅ Generated table! Open 'estadisticas_rutas_tfg.csv' to view the data.")
