@@ -10,7 +10,7 @@ The city is split into 4 geographic zones, each managed by an independent edge s
 
 The following figure showcases the final output of the proposed system, demonstrating the effective integration of real-time air quality data into the routing algorithm:
 
-![Final system output](images/system_final_output.jpg)
+![Final system output](images/system_final_output.png)
 
 ---
 
