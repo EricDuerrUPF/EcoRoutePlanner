@@ -144,6 +144,7 @@ Prints route statistics for all three modes and generates `comparativa_rutas_tfg
 
 ## Architecture
 
+### System Architecture Diagram
 ```mermaid
 flowchart TD
     classDef user fill:#fff,stroke:#333,stroke-width:3px
@@ -179,6 +180,7 @@ flowchart TD
     CO -- "Stitched route + stats" --> Out([comparativa_rutas_tfg.html])
 ```
 
+### Sequence diagram
 ```mermaid
 sequenceDiagram
     actor User
