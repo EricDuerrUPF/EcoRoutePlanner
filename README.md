@@ -12,6 +12,18 @@ The following figure showcases the final output of the proposed system, demonstr
 
 ![Final system output](images/system_final_output.png)
 
+### Map interpretation
+*   **Routing Modes**: The system calculates and compares three distinct paths to highlight the trade-offs between efficiency and sustainability:
+    *   **Fastest (Red):** Optimised solely for minimal travel time, prioritizing major traffic corridors.
+    *   **Greenest (Green):** Prioritises paths with lower pollutant concentrations, minimising environmental exposure.
+    *   **Balanced (Blue):** A hybrid strategy that provides an optimal equilibrium between time efficiency and air quality.
+*   **Traffic Overlay:** Street segments are color-coded based on live congestion levels, ranging from Green (free-flowing) to Red (heavy traffic). (See top right)
+
+*   **Performance Metrics:** The sidebar provides a quantitative analysis for the selected route:
+    *   **Distance (km):** Total route length.
+    *   **Travel Time (min):** Estimated duration based on live traffic updates.
+    *   **AQ (Air Quality) Cost:** An aggregate score representing the cumulative pollutant exposure along the route.
+
 ---
 
 ## Full Pipeline
