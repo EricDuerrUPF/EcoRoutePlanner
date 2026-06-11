@@ -6,6 +6,14 @@ The city is split into 4 geographic zones, each managed by an independent edge s
 
 ---
 
+## System Demonstration
+
+The following figure showcases the final output of the proposed system, demonstrating the effective integration of real-time air quality data into the routing algorithm:
+
+![Final system output](images/system_final_output.jpg)
+
+---
+
 ## Full Pipeline
 
 The system is built and run in the following order:
@@ -56,7 +64,7 @@ central_test.py      (orchestrator + map output)
 
 ### Output files
 
-- **`comparativa_rutas_tfg.html`** — Interactive Leaflet map. Toggle between Fastest / Greenest / Balanced routes, with per-edge traffic colouring and a stats panel.
+- **`comparison_routes_tfg.html`** — Interactive Leaflet map. Toggle between Fastest / Greenest / Balanced routes, with per-edge traffic colouring and a stats panel.
 - **`mapa_zonas_reales.html`** — Zone boundary visualisation.
 - **`estadisticas_rutas_tfg.csv`** — Route statistics for all tested origin-destination pairs and modes.
 
